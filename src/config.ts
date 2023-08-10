@@ -10,7 +10,7 @@ export const treebanks: TreebankMap = {
     ],
     'simple-sentence': [
         ['noun-phrase', ' ', 'verb', ' ', 'adjective'],
-        ['noun-phrase', ' must ', 'verb', ' ', 'adjective'],
+        // ['noun-phrase', ' must ', 'verb', ' ', 'adjective'],
     ],
     'noun-phrase': [
         ['determiner', ' ', 'noun'],
