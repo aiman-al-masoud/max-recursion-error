@@ -1,4 +1,4 @@
-import { TokenMap, TreebankMap } from "./stuff.ts";
+import { TokenMap, TreebankMap } from "./core.ts";
 
 export const treebanks: TreebankMap = {
     sentence: [

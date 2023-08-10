@@ -1,8 +1,4 @@
-function pickRand<T>(arr: T[], avoid?: unknown): T | undefined {
-    const pool = arr.filter(x => JSON.stringify(x) !== JSON.stringify(avoid))
-    const choice = pool[parseInt((pool.length * Math.random()) + '')]
-    return choice
-}
+import { pickRand, sentencesOf, wordsOf } from "./utils.ts"
 
 export type Treebank = string[][]
 export type TreebankMap = { [string: string]: Treebank }
@@ -12,41 +8,6 @@ export type Answer = {
     answerer: string,
     answer: string,
     timestamp: number,
-}
-
-function generate(
-    treebanks: TreebankMap,
-    tokens: TokenMap,
-    start: string,
-    limit: number,
-    avoid?: unknown
-): string {
-
-    if (limit <= 0) {
-        return ''
-    }
-
-    if (start in treebanks) {
-        const tb = pickRand(treebanks[start], avoid)
-        if (tb) return tb.map(x => generate(treebanks, tokens, x, limit - 1, x)).reduce((a, b) => a + b, '')
-    }
-
-    if (start in tokens) {
-        const t = pickRand(tokens[start as TokenType], avoid)
-        if (t) return t
-    }
-
-    return start
-}
-
-function sentencesOf(text: string) {
-    const sentences = text.split(/\.|\?|\!|\,/).filter(x => x.trim())
-    const result = sentences.map(x => x.trim())
-    return result
-}
-
-function wordsOf(text: string) {
-    return text.replace(/\.|\?|\!|\,/g, ' ').toLowerCase().split(/\s+/)
 }
 
 export function makeAnswer(
@@ -81,5 +42,30 @@ export function formatAnswer(ans: Answer): string {
                     <p id="output-answer">${ans.answer}</p>
                 </div>
             </div>`
+}
+
+function generate(
+    treebanks: TreebankMap,
+    tokens: TokenMap,
+    start: string,
+    limit: number,
+    avoid?: unknown
+): string {
+
+    if (limit <= 0) {
+        return ''
+    }
+
+    if (start in treebanks) {
+        const tb = pickRand(treebanks[start], avoid)
+        if (tb) return tb.map(x => generate(treebanks, tokens, x, limit - 1, x)).reduce((a, b) => a + b, '')
+    }
+
+    if (start in tokens) {
+        const t = pickRand(tokens[start as TokenType], avoid)
+        if (t) return t
+    }
+
+    return start
 }
 
