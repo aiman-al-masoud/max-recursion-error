@@ -1,96 +1,193 @@
-function sentencesOf(text = '') {
-    const sentences = text.split(/\.|\?|\!/).filter(x => x.trim())
-    const result = sentences.map(x => x.trim())
-    return result
-}
+// deno-fmt-ignore-file
+// deno-lint-ignore-file
+// This code was bundled using `deno bundle` and it's not recommended to edit it manually
 
-function linkize(prefix = '', sentence = '') {
-    const words = sentence.replace(/\W+/, '').split(/\s+/)
-    const name = words.reduce((a, b) => a + '-' + b)
-    const link = `${prefix}${parseInt(100000 * Math.random())}/${name}`
-    const htmlLink = `<a href="/">${link}</a>`
-    return htmlLink
-}
-
-function soLinkize(sentence = '') {
-    return linkize('https://stackoverflow.com/questions/', sentence)
-}
-
-function docLinkize(sentence = '') {
-    return linkize('https://docs.python.org/', sentence)
-}
-
-function randChoice(arr = []) {
-    return arr[parseInt(arr.length * Math.random())]
-}
-
-function so1(summary = ['']) {
-    return `
-    This question is irrelevant.    
-    You say "<i>${randChoice(summary)}"</i>, but then it is obvious that <i>"${randChoice(summary)}"</i>.
-    You don't provide any specific code, you just say that <i>"${randChoice(summary)}"</i>.
-    How on earth do you expect to get an answer?
-    Btw, clearly a duplicate of ${soLinkize(randChoice(summary))}.
-    `
-}
-
-function so2(summary = ['']) {
-    return `
-    I quote you: <i>"${randChoice(summary)}"</i>
-    
-    What?
-    This question sucks.
-    You suck.
-    What does <i>"${randChoice(summary)}"</i> even mean?
-    Please go read the documentation at ${docLinkize(randChoice(summary))}
-    `
-}
-
-function so3(summary = ['']) {
-    return `
-    This is a duplicate of ${soLinkize(randChoice(summary))} and ${soLinkize(randChoice(summary))}.
-
-    The question has been closed, because it's unnecessary.
-    You are unnecessary.
-
-    <i>"${randChoice(summary)}"</i>, so what?    
-    `
-}
-
-function stackoverflowize(templates = [() => ''], summary = ['']) {
-    return randChoice(templates)(summary)
-}
-
-const templates = [
-    so1,
-    so2,
-    so3,
-]
-
-const answerers = [
+const treebanks = {
+    sentence: [
+        [
+            'simple-sentence'
+        ],
+        [
+            'sentence',
+            ' ',
+            'but',
+            ' ',
+            'sentence'
+        ],
+        [
+            'sentence',
+            ' ',
+            'and',
+            ' ',
+            'sentence'
+        ],
+        [
+            'quote'
+        ],
+        [
+            'you must read ',
+            'link'
+        ]
+    ],
+    'simple-sentence': [
+        [
+            'noun-phrase',
+            ' ',
+            'verb',
+            ' ',
+            'adjective'
+        ]
+    ],
+    'noun-phrase': [
+        [
+            'determiner',
+            ' ',
+            'noun'
+        ],
+        [
+            'noun-phrase',
+            ' ',
+            'that',
+            ' ',
+            'sentence'
+        ]
+    ],
+    quote: [
+        [
+            'you say',
+            ' ',
+            '"',
+            'text',
+            '"'
+        ]
+    ],
+    link: [
+        [
+            'https://max-recursion-error.com/',
+            'newWord',
+            '-',
+            'newWord',
+            '-',
+            'newWord',
+            '-',
+            'newWord'
+        ],
+        [
+            'https://docs.python.org/3/',
+            'newWord',
+            '-',
+            'newWord',
+            '-',
+            'newWord',
+            '-',
+            'newWord'
+        ],
+        [
+            'https://developer.mozilla.org/en-US/docs/',
+            'newWord',
+            '-',
+            'newWord',
+            '-',
+            'newWord',
+            '-',
+            'newWord'
+        ]
+    ]
+};
+const tokens = {
+    determiner: [
+        'the',
+        'this',
+        'that',
+        'your'
+    ],
+    noun: [
+        'question',
+        'code',
+        'idea',
+        'website',
+        'intelligence',
+        'stupidity',
+        'remark',
+        'person',
+        'documentation',
+        'duplicate'
+    ],
+    adjective: [
+        'stupid',
+        'silly',
+        'ludicrous',
+        'mean',
+        'scary',
+        'evil',
+        'crazy',
+        'bigoted',
+        'irrelevant',
+        'pathetic',
+        'duplicated'
+    ],
+    verb: [
+        'is'
+    ],
+    text: [],
+    newWord: []
+};
+const usernames = [
     '10x Dev',
     'Noobie Crusher',
     'Urcodeissh*t',
     'Usuck',
     '100x Dev',
-]
-
-
-document.getElementById('input-question').oninput = () => {
-    const question = document.getElementById('input-question').textContent
-    const sentences = sentencesOf(question)
-    document.getElementById('output-answer').innerHTML = stackoverflowize(templates, sentences)
-    document.querySelector('.vote-count').textContent = -parseInt(1000 * Math.random())
-    document.querySelector('.question-timestamp').textContent = new Date().toDateString()
-    document.querySelector('.answer-timestamp').textContent = new Date().toDateString()
-    document.querySelector('.question-title').textContent = sentences[0]
-    document.querySelector('.answerer').textContent = randChoice(answerers)
+    'Normie Hater',
+    '20x Dev'
+];
+function pickRand(arr, avoid) {
+    const pool = arr.filter((x)=>JSON.stringify(x) !== JSON.stringify(avoid));
+    const choice = pool[parseInt(pool.length * Math.random() + '')];
+    return choice;
 }
-
-document.querySelector('.upvote-button').onclick = () => {
-    alert("You cannot upvote your own question! You don't have enough experience!!!")
+function generate(treebanks, tokens, start, limit, avoid) {
+    if (limit <= 0) {
+        return '';
+    }
+    if (start in treebanks) {
+        const tb = pickRand(treebanks[start], avoid);
+        if (tb) return tb.map((x)=>generate(treebanks, tokens, x, limit - 1, x)).reduce((a, b)=>a + b, '');
+    }
+    if (start in tokens) {
+        const t = pickRand(tokens[start], avoid);
+        if (t) return t;
+    }
+    return start;
 }
-
-document.querySelector('.downvote-button').onclick = () => {
-    document.querySelector('.vote-count').textContent = -parseInt(1000 * Math.random())
+function sentencesOf(text) {
+    const sentences = text.split(/\.|\?|\!|\,/).filter((x)=>x.trim());
+    const result = sentences.map((x)=>x.trim());
+    return result;
 }
+function wordsOf(text) {
+    return text.replace(/\.|\?|\!|\,/g, ' ').toLowerCase().split(/\s+/);
+}
+function makeAnswer(question, usernames, treebanks, tokens, limit) {
+    const freshTokens = {
+        ...tokens,
+        text: [
+            ...tokens.text,
+            ...sentencesOf(question)
+        ],
+        newWord: wordsOf(question)
+    };
+    const answer = generate(treebanks, freshTokens, 'sentence', limit);
+    const answerer = pickRand(usernames);
+    return {
+        answer,
+        answerer
+    };
+}
+document.getElementById('input-question').oninput = ()=>{
+    const question = document.getElementById('input-question').textContent;
+    const ans = makeAnswer(question, usernames, treebanks, tokens, 10);
+    console.log('question=', question);
+    console.log('ans=', ans);
+};
+
