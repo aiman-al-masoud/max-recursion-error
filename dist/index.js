@@ -127,7 +127,8 @@ const tokens = {
         'duplicate',
         'Python',
         'C++',
-        'Java'
+        'Java',
+        'bullshit'
     ],
     adjective: [
         'stupid',
