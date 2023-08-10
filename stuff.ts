@@ -11,6 +11,7 @@ export type TokenMap = { [x in TokenType]: string[] }
 export type Answer = {
     answerer: string,
     answer: string,
+    timestamp: number,
 }
 
 function generate(
@@ -54,6 +55,7 @@ export function makeAnswer(
     treebanks: TreebankMap,
     tokens: TokenMap,
     limit: number,
+    timestamp: number,
 ): Answer {
 
     const freshTokens: TokenMap = {
@@ -67,7 +69,18 @@ export function makeAnswer(
     return {
         answer,
         answerer,
+        timestamp,
     }
+}
+
+export function formatAnswer(ans: Answer): string {
+    return `<div class="answer">
+                <p class="answer-details">Answered by <span class="username answerer">${ans.answerer}</span> on <span
+                        class="timestamp answer-timestamp">${new Date(ans.timestamp).toDateString()}</span></p>
+                <div class="answer-content">
+                    <p id="output-answer">${ans.answer}</p>
+                </div>
+            </div>`
 }
 
 

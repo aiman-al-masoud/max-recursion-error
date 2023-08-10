@@ -10,25 +10,26 @@ export const treebanks: TreebankMap = {
     ],
     'simple-sentence': [
         ['noun-phrase', ' ', 'verb', ' ', 'adjective'],
+        ['noun-phrase', ' must ', 'verb', ' ', 'adjective'],
     ],
     'noun-phrase': [
         ['determiner', ' ', 'noun'],
         ['noun-phrase', ' ', 'that', ' ', 'sentence'],
     ],
     quote: [
-        ['you say', ' ', '"', 'text', '"'],
+        ['you say', ' ', '<i>', '"', 'text', '"', '</i>'],
     ],
     link: [
-        ['https://max-recursion-error.com/', 'newWord', '-', 'newWord', '-', 'newWord', '-', 'newWord'],
-        ['https://docs.python.org/3/', 'newWord', '-', 'newWord', '-', 'newWord', '-', 'newWord'],
-        ['https://developer.mozilla.org/en-US/docs/', 'newWord', '-', 'newWord', '-', 'newWord', '-', 'newWord'],
+        ['<a href="">https://max-recursion-error.com/', 'newWord', '-', 'newWord', '-', 'newWord', '-', 'newWord', '</a>'],
+        ['<a href="">https://docs.python.org/3/', 'newWord', '-', 'newWord', '-', 'newWord', '-', 'newWord', '</a>'],
+        ['<a href="">https://developer.mozilla.org/en-US/docs/', 'newWord', '-', 'newWord', '-', 'newWord', '-', 'newWord', '</a>'],
     ]
 }
 
 export const tokens: TokenMap = {
     determiner: ['the', 'this', 'that', 'your'],
-    noun: ['question', 'code', 'idea', 'website', 'intelligence', 'stupidity', 'remark', 'person', 'documentation', 'duplicate'],
-    adjective: ['stupid', 'silly', 'ludicrous', 'mean', 'scary', 'evil', 'crazy', 'bigoted', 'irrelevant', 'pathetic', 'duplicated'],
+    noun: ['you', 'question', 'code', 'idea', 'website', 'intelligence', 'stupidity', 'remark', 'person', 'documentation', 'duplicate', 'Python', 'C++', 'Java'],
+    adjective: ['stupid', 'silly', 'ludicrous', 'mean', 'scary', 'evil', 'crazy', 'bigoted', 'irrelevant', 'pathetic', 'duplicated', 'deprecated'],
     verb: ['is'],
     text: [],
     newWord: [],

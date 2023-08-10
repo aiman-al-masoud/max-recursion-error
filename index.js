@@ -36,6 +36,13 @@ const treebanks = {
             'verb',
             ' ',
             'adjective'
+        ],
+        [
+            'noun-phrase',
+            ' must ',
+            'verb',
+            ' ',
+            'adjective'
         ]
     ],
     'noun-phrase': [
@@ -56,41 +63,46 @@ const treebanks = {
         [
             'you say',
             ' ',
+            '<i>',
             '"',
             'text',
-            '"'
+            '"',
+            '</i>'
         ]
     ],
     link: [
         [
-            'https://max-recursion-error.com/',
+            '<a href="">https://max-recursion-error.com/',
             'newWord',
             '-',
             'newWord',
             '-',
             'newWord',
             '-',
-            'newWord'
+            'newWord',
+            '</a>'
         ],
         [
-            'https://docs.python.org/3/',
+            '<a href="">https://docs.python.org/3/',
             'newWord',
             '-',
             'newWord',
             '-',
             'newWord',
             '-',
-            'newWord'
+            'newWord',
+            '</a>'
         ],
         [
-            'https://developer.mozilla.org/en-US/docs/',
+            '<a href="">https://developer.mozilla.org/en-US/docs/',
             'newWord',
             '-',
             'newWord',
             '-',
             'newWord',
             '-',
-            'newWord'
+            'newWord',
+            '</a>'
         ]
     ]
 };
@@ -102,6 +114,7 @@ const tokens = {
         'your'
     ],
     noun: [
+        'you',
         'question',
         'code',
         'idea',
@@ -111,7 +124,10 @@ const tokens = {
         'remark',
         'person',
         'documentation',
-        'duplicate'
+        'duplicate',
+        'Python',
+        'C++',
+        'Java'
     ],
     adjective: [
         'stupid',
@@ -124,7 +140,8 @@ const tokens = {
         'bigoted',
         'irrelevant',
         'pathetic',
-        'duplicated'
+        'duplicated',
+        'deprecated'
     ],
     verb: [
         'is'
@@ -168,7 +185,7 @@ function sentencesOf(text) {
 function wordsOf(text) {
     return text.replace(/\.|\?|\!|\,/g, ' ').toLowerCase().split(/\s+/);
 }
-function makeAnswer(question, usernames, treebanks, tokens, limit) {
+function makeAnswer(question, usernames, treebanks, tokens, limit, timestamp) {
     const freshTokens = {
         ...tokens,
         text: [
@@ -181,13 +198,47 @@ function makeAnswer(question, usernames, treebanks, tokens, limit) {
     const answerer = pickRand(usernames);
     return {
         answer,
-        answerer
+        answerer,
+        timestamp
     };
 }
+function formatAnswer(ans) {
+    return `<div class="answer">
+                <p class="answer-details">Answered by <span class="username answerer">${ans.answerer}</span> on <span
+                        class="timestamp answer-timestamp">${new Date(ans.timestamp).toDateString()}</span></p>
+                <div class="answer-content">
+                    <p id="output-answer">${ans.answer}</p>
+                </div>
+            </div>`;
+}
+const state = {
+    tokens,
+    treebanks,
+    usernames,
+    downvotes: 0
+};
 document.getElementById('input-question').oninput = ()=>{
     const question = document.getElementById('input-question').textContent;
-    const ans = makeAnswer(question, usernames, treebanks, tokens, 10);
-    console.log('question=', question);
-    console.log('ans=', ans);
+    const time = new Date().getTime();
+    const answers = [
+        1,
+        2,
+        3,
+        4,
+        5
+    ].map((_)=>makeAnswer(question, state.usernames, state.treebanks, state.tokens, 10, time));
+    const anwersHtml = answers.map((x)=>formatAnswer(x));
+    const answersDiv = document.querySelector('.answers');
+    answersDiv.innerHTML = '';
+    anwersHtml.forEach((x)=>{
+        const elem = document.createElement('div');
+        elem.innerHTML = x;
+        answersDiv.appendChild(elem);
+    });
+    state.downvotes -= parseInt(50 * Math.random() + '');
+    document.querySelector('.vote-count').textContent = state.downvotes + '';
+    console.log(document.querySelector('.question-timestamp'));
+    document.querySelector('.question-timestamp').innerHTML = new Date(time).toDateString();
+    if (state.downvotes % 50 === 0) alert('your question got banned');
 };
 
