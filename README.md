@@ -7,6 +7,8 @@ Error!!!** The best and brightest instantaneous A"I" tool that will eagerly
 answer all of your queries with the most characteristic proceduarally
 generated and customizable mannerism!
 
+![](./res/max-recursion-error-logo.png)
+
 ## Instructions
 
 1. Edit [config.ts](./src/config.ts) as you wish, 
@@ -14,3 +16,4 @@ generated and customizable mannerism!
 1. and open [dist/index.html](./dist/index.html) on your favorite browser.
 
 Hours of endless fun!
+
