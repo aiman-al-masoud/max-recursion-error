@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max Recursion Error</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="index.js" defer="true"></script>
+</head>
+
+<body>
+    <header>
+        <img src="../res/max-recursion-error-logo.png" width="200" style="padding: 10px;" alt="">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Tags</a></li>
+                <li><a href="#">Users</a></li>
+                <li><a href="#">Ask Question</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="question">
+            <h1 class="question-title">Question Title</h1>
+            <p class="question-details">Asked by <span class="username">Noob</span> on <span
+                    class="timestamp question-timestamp">August 9, 2023</span></p>
+            <div class="question-content">
+                <p contentEditable="true" id="input-question">
+                    Write here your question...
+                </p>
+            </div>
+            <div class="voting">
+                <button class="vote-button downvote-button">▼</button>
+                <span class="vote-count">0</span>
+                <button class="vote-button upvote-button">▲</button>
+            </div>
+        </div>
+
+        <div class="answers">
+            <div class="answer">
+                <p class="answer-details">Answered by <span class="username answerer">Answerer</span> on <span
+                        class="timestamp answer-timestamp">August 10, 2023</span></p>
+                <div class="answer-content">
+                    <p id="output-answer">This is an answer</p>
+                </div>
+            </div>
+            <!-- More answers can be added here -->
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Max Recursion Error</p>
+    </footer>
+
+
+</body>
+
+</html>

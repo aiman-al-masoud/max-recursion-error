@@ -1,0 +1,112 @@
+/* Reset some default styling */
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #f6f6f6;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+nav li {
+    margin: 0 10px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #0077cc;
+}
+
+main {
+    padding: 20px;
+}
+
+.question {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.question-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.question-details {
+    color: #777;
+}
+
+.question-content {
+    margin-top: 10px;
+}
+
+
+.answers {
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+}
+
+.answer {
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+}
+
+.answer-details {
+    color: #777;
+}
+
+/* You can add more specific styles here for answer content, timestamps, etc. */
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #f6f6f6;
+    border-top: 1px solid #ccc;
+}
+
+.voting {
+    display: flex;
+    flex-direction: left;
+    align-items: left;
+    margin-right: 20px;
+}
+
+.vote-button {
+    font-size: 24px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.upvote-button {
+    color: #0077cc;
+}
+
+.downvote-button {
+    color: #dc3545;
+}
+
+.vote-count {
+    font-size: 18px;
+    margin-top: 5px;
+}

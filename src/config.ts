@@ -28,7 +28,7 @@ export const treebanks: TreebankMap = {
 
 export const tokens: TokenMap = {
     determiner: ['the', 'this', 'that', 'your'],
-    noun: ['you', 'question', 'code', 'idea', 'website', 'intelligence', 'stupidity', 'remark', 'person', 'documentation', 'duplicate', 'Python', 'C++', 'Java'],
+    noun: ['you', 'question', 'code', 'idea', 'website', 'intelligence', 'stupidity', 'remark', 'person', 'documentation', 'duplicate', 'Python', 'C++', 'Java', 'bullshit'],
     adjective: ['stupid', 'silly', 'ludicrous', 'mean', 'scary', 'evil', 'crazy', 'bigoted', 'irrelevant', 'pathetic', 'duplicated', 'deprecated'],
     verb: ['is'],
     text: [],
