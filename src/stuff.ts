@@ -83,11 +83,3 @@ export function formatAnswer(ans: Answer): string {
             </div>`
 }
 
-
-
-// const ans = makeAnswer('how do I set a variable in python? Please help me because I am a noob, and I am still learning, thanks!', usernames, treebanks, tokens, 10)
-// console.log(ans)
-// console.log(ans.answer)
-
-
-
